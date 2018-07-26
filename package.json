@@ -1,0 +1,29 @@
+{
+  "name": "w_bframe",
+  "version": "1.0.0",
+  "description": "wy backstage frame",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangyu19910428/W_bFrame.git"
+  },
+  "author": "wangyu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangyu19910428/W_bFrame/issues"
+  },
+  "homepage": "https://github.com/wangyu19910428/W_bFrame#readme",
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.10"
+  }
+}
