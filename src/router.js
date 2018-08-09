@@ -1,8 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import Index from './Index/index';
 const Root = () => {
-    return (<div>123</div>)
+    return (<Index/>)
 }
 
 ReactDOM.render(<Root />,document.getElementById('root'));
