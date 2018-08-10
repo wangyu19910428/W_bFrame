@@ -41,7 +41,7 @@ let options = {
         new HtmlWebpackPlugin({
             filename: utils.fullPath('index.html'),
             chunks: ['app','vendor'],
-            template: SRC_PATH + '/index.html'
+            template: SRC_PATH + '/tpl.html'
         }),
         new webpack.ProvidePlugin({
             React: 'react',
