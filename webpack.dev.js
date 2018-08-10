@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const config = require('./webpack.config');
+const config = require('./webpack.base.js');
 
 const PORT = 5200;
 const HOST = '127.0.0.1';
@@ -9,8 +9,6 @@ const HOST = '127.0.0.1';
 const localPublicPath = 'http://' + HOST + ':' + PORT + '/';
 
 config.output.publicPath = localPublicPath;
-config.mode = 'development';
-config.devtool = 'inline-source-map';
 new WebpackDevServer(webpack(config), {
   hot:true,
   inline: true,
@@ -24,8 +22,9 @@ new WebpackDevServer(webpack(config), {
 }).listen(PORT, HOST, function() {
   console.log(localPublicPath);
 });
-// config.plugins.pop();
 
+config.mode = 'development'; 
+config.devtool = 'inline-source-map';
 // config.plugins.push(
     // new webpack.NamedModulesPlugin()
 // )

@@ -2,21 +2,23 @@ const webpack = require('webpack');
 const utils  = require('./utils');//公用方法
 const SRC_PATH = utils.fullPath('src');
 const DIST_PATH = utils.fullPath('dist');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const package = require('./package.json');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
+//插件
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const __DEV__ = process.argv[3] !== 'webpack.pro.js';
 
 let options = {
     mode: 'production',
     entry: {
-        app: SRC_PATH + '/router.js',
-        vendor: Object.keys(package.dependencies)
+        app: SRC_PATH + '/router.js'
+        // vendor: Object.keys(package.dependencies)
     },
     output: {
-        filename: 'js/[name].js',
+        filename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js',
         path: DIST_PATH,
         publicPath: './',
-        chunkFilename: 'js/[name].js'
+        chunkFilename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js'
     },
     module: {
         rules: [
@@ -31,9 +33,9 @@ let options = {
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.(c|sa|sc)ss$/,
                 exclude: '/node_modules/',
-                use: ['style-loader', 'css-loader']
+                use: [__DEV__? 'style-loader': MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             }
         ]
     },
@@ -48,7 +50,10 @@ let options = {
             ReactDOM: 'react-dom',
             Component: ['react', 'Component']
         }),
-        // new CleanWebpackPlugin(['dist/*'])
+        new MiniCssExtractPlugin({
+            filename: __DEV__? 'css/[name].css': 'css/[name].[hash:8].css',
+            // chunkFilename: __DEV__ ? '[id].css' : '[id].[hash:8].css',
+        })
     ],
     optimization: {
         splitChunks: {
@@ -63,10 +68,7 @@ let options = {
                     priority:100
                 }
             }
-        },
-        // runtimeChunk: {
-            // name: 'manifest'
-        // }
+        }
     }
 }
 

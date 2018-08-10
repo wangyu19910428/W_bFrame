@@ -1,4 +1,4 @@
-import './index.css';
+import './index.scss';
 
 export default class Index extends Component{
     constructor(props) {
