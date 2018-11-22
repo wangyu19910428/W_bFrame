@@ -7,6 +7,8 @@ const HOST = '127.0.0.1';
 
 // 本地环境静态资源路径
 const localPublicPath = 'http://' + HOST + ':' + PORT + '/';
+config.devtool = 'inline-source-map';
+config.mode = 'development'; 
 
 config.output.publicPath = localPublicPath;
 new WebpackDevServer(webpack(config), {
@@ -22,9 +24,8 @@ new WebpackDevServer(webpack(config), {
 }).listen(PORT, HOST, function() {
   console.log(localPublicPath);
 });
-
-config.mode = 'development'; 
-config.devtool = 'inline-source-map';
+// config.devtool = 'inline-source-map';
+// config.devtool = '#eval-cheap-module-source-map';
 // config.plugins.push(
     // new webpack.NamedModulesPlugin()
 // )

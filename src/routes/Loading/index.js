@@ -1,13 +1,17 @@
-import './index.less';
+import './index.scss';
 
-export default class Loading extends Component{
-    constructor(props) {
-        super(props);
+const Loading = ({ isLoading, error, pastDelay }) => {
+    // Handle the loading state
+    if (isLoading) {
+        return <div>loading...</div>
     }
-    render () {
-        return (
-            <div id='loading'>Loading
-            </div>
-        )
+    // Handle the error state
+    else if (error) {
+        return <div>Sorry, there was a problem loading the page.</div>;
     }
-}
+    else {
+        return null;
+    }
+};
+
+export default Loading;
