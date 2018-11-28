@@ -2,10 +2,13 @@
 // 按路由拆分代码
 // import Loadable from 'react-loadable';
 import Loading from './routes/Loading/index';
-import MainLayout from './MainLayout/index';
 
 const Index = Loadable({
     loader: () => import(/* webpackChunkName: "Index" */ "./routes/Index/index"),
+    loading: Loading
+});
+const MainLayout = Loadable({
+    loader: () => import(/* webpackChunkName: "MainLayout" */ "./MainLayout/index"),
     loading: Loading
 });
 

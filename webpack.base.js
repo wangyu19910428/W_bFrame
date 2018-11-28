@@ -9,9 +9,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const __DEV__ = process.argv[3] !== 'webpack.pro.js';
 
 let options = {
-    entry: {
-        app: SRC_PATH + '/router.js',
-    },
+    // entry: {
+    //     app: SRC_PATH + '/router.js',
+    // },
     output: {
         filename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js',
         path: DIST_PATH,
@@ -83,7 +83,7 @@ let options = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: utils.fullPath('index.html'),
-            chunks: ['app','vendor'],
+            chunks: ['main','vendor'],
             template: SRC_PATH + '/tpl.html'
         }),
         new webpack.ProvidePlugin({
@@ -105,21 +105,20 @@ let options = {
     ],
     optimization: {
         splitChunks: {
+            chunks: 'all',
+            automaticNameDelimiter: '-',
             cacheGroups: {
                 vendor: {
-                    chunks:"all",
-                    test: /[\\/]node_modules[\\/]/,
+                    chunks:"initial",
+                    // test: /[\\/]node_modules[\\/]/,
                     name:"vendor",
-                    minChunks: 1, //被不同entry引用次数(import),1次的话没必要提取
-                    maxInitialRequests: 5,
-                    minSize: 0,
-                    priority:-10,
+                    // minChunks: 1, //被不同entry引用次数(import),1次的话没必要提取
+                    // maxInitialRequests: 5,
+                    // minSize: 0,
+                    // priority:-10,
                     enforce: true
                 }
-            }
-        },
-        runtimeChunk: {
-            name: 'runtime'
+            },
         }
     }
 }

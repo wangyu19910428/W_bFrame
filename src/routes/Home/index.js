@@ -1,5 +1,6 @@
 import './index.scss';
-import { Button, DatePicker, Input, Table, Card } from 'antd';
+// import { Button, DatePicker, Input, Table, Card, Select } from 'antd';
+// const Options = Select.Option;
 
 export default class Home extends Component{
     constructor(props) {
@@ -19,11 +20,14 @@ export default class Home extends Component{
     render () {
         return (
             <div id='home'>Home
-                <Button type='primary' onClick={this.handleCLick} >gaibna</Button>
+                {/* <Button type='primary' onClick={this.handleCLick} >gaibna</Button>
                 <DatePicker/>
                 <Input/>
                 <Table/>
                 <Card></Card>
+                <Select>
+                    <Option value={1}>name</Option>
+                </Select> */}
             </div>
         )
     }

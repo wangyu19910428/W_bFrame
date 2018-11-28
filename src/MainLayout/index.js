@@ -11,6 +11,7 @@ const User = Loadable({
     loader: () => import(/* webpackChunkName: "User" */ "../routes/User/index"),
     loading: Loading
 });
+
 import './index.scss';
 
 class MainLayout extends Component{
@@ -72,7 +73,7 @@ class MainLayout extends Component{
                 <Layout style={{ marginLeft: 200 }}>
                     <Header >header</Header>
                     <Content>
-                        <Route path={`${match.path}/:id/home`} component={Home} />
+                        <Route path={`${match.path}/:id/home`} component={Home}/>
                         <Route path={`${match.path}/user`} component={User} />
                     </Content>
                     <Footer>
