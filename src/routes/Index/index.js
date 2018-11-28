@@ -1,4 +1,4 @@
-import './index.scss';
+import './index.less';
 
 export default class Index extends Component{
     constructor(props) {

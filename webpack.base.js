@@ -2,16 +2,25 @@ const webpack = require('webpack');
 const utils  = require('./utils');//公用方法
 const SRC_PATH = utils.fullPath('src');
 const DIST_PATH = utils.fullPath('dist');
+const NODE_MODULES = utils.fullPath('node_modules');
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 // const package = require('./package.json');
 //插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const __DEV__ = process.argv[3] !== 'webpack.pro.js';
 
+//复制index.html 模板配置数据
+let HtmlPluginOptions = {
+    filename: utils.fullPath('index.html'),
+    chunks: ['main','vendor'],
+    template: SRC_PATH + '/tpl.html'
+};
+
+__DEV__? HtmlPluginOptions.alwaysWriteToDisk = true: null;
+
 let options = {
-    // entry: {
-    //     app: SRC_PATH + '/router.js',
-    // },
     output: {
         filename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js',
         path: DIST_PATH,
@@ -34,39 +43,61 @@ let options = {
                     }
                 }
             },
-            
-            {//css处理
-                test:/\.css$/,
-                exclude: /node_modules/,
-                use:[__DEV__? 'style-loader': MiniCssExtractPlugin.loader, 'css-loader']
-            },
             {//antd样式处理
                 test:/\.css$/,
-                exclude: SRC_PATH,
                 use:[
+                    // MiniCssExtractPlugin.loader, 
                     __DEV__? 'style-loader': MiniCssExtractPlugin.loader, 
                     {
                         loader: "css-loader",
                         options:{
-                            importLoaders:1
+                            importLoaders:1//
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: [
+                                require('autoprefixer')({
+                                    browsers: ['last 5 version']
+                                })
+                            ]
                         }
                     }
                 ]
             },
             {
                 test: /\.(sc|sa)ss$/,
-                use: [ __DEV__? 'style-loader': MiniCssExtractPlugin.loader , "css-loader", "sass-loader", 
-                {
+                exclude: NODE_MODULES,
+                include: SRC_PATH,
+                // use: [ 'style-loader' , "css-loader", "sass-loader"], 
+                use: [ __DEV__? 'style-loader': MiniCssExtractPlugin.loader , "css-loader", "sass-loader", {
                     loader: "postcss-loader",
                     options: {
-                    plugins: [
-                        require('autoprefixer')({
-                        browsers: ['last 5 version']
-                        })
-                    ]
+                        plugins: [
+                            require('autoprefixer')({
+                                browsers: ['last 5 version']
+                            })
+                        ]
                     }
-                }
-                ]
+                }]
+            },
+            {
+                test: /\.less$/,
+                exclude: NODE_MODULES,
+                include: SRC_PATH,
+                // use: [ MiniCssExtractPlugin.loader , "css-loader", "sass-loader", 
+                // use: [ 'style-loader' , "css-loader", "sass-loader"], 
+                use: [ __DEV__? 'style-loader': MiniCssExtractPlugin.loader , "css-loader", "less-loader", {
+                        loader: "postcss-loader",
+                        options: {
+                            plugins: [
+                                require('autoprefixer')({
+                                    browsers: ['last 5 version']
+                                })
+                            ]
+                        }
+                    }]
             },
             {
                 test: /\.(png|jpg|gif)$/,
@@ -81,11 +112,7 @@ let options = {
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            filename: utils.fullPath('index.html'),
-            chunks: ['main','vendor'],
-            template: SRC_PATH + '/tpl.html'
-        }),
+        new HtmlWebpackPlugin(HtmlPluginOptions),
         new webpack.ProvidePlugin({
             React: 'react',
             ReactDOM: 'react-dom',
@@ -122,5 +149,13 @@ let options = {
         }
     }
 }
+
+//把src下面的BaseJs下的文件复制到dist下面 主要是引用外部js和其他一些非编译的资源
+options.plugins.push(
+    new CopyWebpackPlugin([{
+        from: SRC_PATH + '/BaseJs',
+        to: DIST_PATH + '/src/BaseJs'
+    }])
+)
 
 module.exports = options;

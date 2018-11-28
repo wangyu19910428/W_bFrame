@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.base.js');
-
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const PORT = 5200;
 const HOST = '127.0.0.1';
 
@@ -11,6 +11,7 @@ config.devtool = 'inline-source-map';
 config.mode = 'development'; 
 
 config.output.publicPath = localPublicPath;
+
 new WebpackDevServer(webpack(config), {
   hot:true,
   inline: true,
@@ -32,6 +33,9 @@ new WebpackDevServer(webpack(config), {
 // config.plugins.push(
     // new webpack.HotModuleReplacementPlugin()
 // )
+config.plugins.push(
+    new HtmlWebpackHarddiskPlugin()
+)
 
 
 
