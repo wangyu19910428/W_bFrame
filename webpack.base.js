@@ -99,7 +99,8 @@ let options = {
                     }]
             },
             {
-                test: /\.(png|jpg|jpge|gif)$/,
+                test: /\.(png|jpg|jpge|gif|svg)$/,
+                exclude: [SRC_PATH + '/assets/svg'],
                 use: [{
                     loader: 'url-loader',
                     options: {
@@ -112,7 +113,7 @@ let options = {
             {
                 test: /\.svg$/, //处理svg
                 loader: 'svg-sprite-loader',
-                include: [SRC_PATH + '/assets']
+                include: [SRC_PATH + '/assets/svg']
             }
         ]
     },

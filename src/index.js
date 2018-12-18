@@ -2,7 +2,7 @@
 // 按路由拆分代码
 // import Loadable from 'react-loadable';
 import Loading from './routes/Loading/index';
-
+import './assets/index';
 const Index = Loadable({
     loader: () => import(/* webpackChunkName: "Index" */ "./routes/Index/index"),
     loading: Loading

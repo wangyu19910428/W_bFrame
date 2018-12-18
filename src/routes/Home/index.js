@@ -19,7 +19,11 @@ export default class Home extends Component{
 
     render () {
         return (
-            <div id='home'>Home
+            <div id='home'>
+            <svg>
+          
+            <use href="#global" fill="blue" width="40" height="40" />
+            </svg>Home
                 <Button type='primary' onClick={this.handleCLick} >gaibna</Button>
                 <DatePicker/>
                 <Input/>
@@ -28,6 +32,7 @@ export default class Home extends Component{
                 <Select>
                     <Option value={1}>name</Option>
                 </Select>
+
             </div>
         )
     }
