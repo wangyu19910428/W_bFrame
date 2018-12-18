@@ -73,7 +73,7 @@ class MainLayout extends Component{
                 <Layout style={{ marginLeft: 200 }}>
                     <Header >header</Header>
                     <Content>
-                        <Route path={`${match.path}/:id/home`} component={Home}/>
+                        <Route path={`${match.path}/home`} component={Home}/>
                         <Route path={`${match.path}/user`} component={User} />
                     </Content>
                     <Footer>

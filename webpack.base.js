@@ -5,7 +5,6 @@ const DIST_PATH = utils.fullPath('dist');
 const NODE_MODULES = utils.fullPath('node_modules');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const package = require('./package.json');
 //插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -100,14 +99,20 @@ let options = {
                     }]
             },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|jpge|gif)$/,
                 use: [{
                     loader: 'url-loader',
                     options: {
                         limit: 50000,
-                        outputPath: './img'
+                        outputPath: './img',
+                        name: '[name].[ext]'
                     }
                 }]
+            },
+            {
+                test: /\.svg$/, //处理svg
+                loader: 'svg-sprite-loader',
+                include: [SRC_PATH + '/assets']
             }
         ]
     },

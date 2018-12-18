@@ -11,7 +11,7 @@ export default class Index extends Component{
     render () {
         return (
             <div id='index' onClick={() => {
-                this.props.history.push({pathname: '/fe/10/home', search: '?id=2'})
+                this.props.history.push({pathname: '/fe/home', search: '?id=2'})
             }} >Index</div>
         )
     }

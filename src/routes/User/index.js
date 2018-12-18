@@ -1,12 +1,12 @@
 import './index.scss';
-import { browserHistory } from 'react-router-dom';
+import SearchListTpl from '../../component/SearchListTpl/index';
 export default class User extends Component{
     constructor(props) {
         super(props);
     }
 
     handleCLick = () => {
-        browserHistory.push({pathname: '/fe/home'})
+        
     }
     render () {
         return (
