@@ -1,32 +1,34 @@
-// import Index from './Index/index';
-// 按路由拆分代码
-// import Loadable from 'react-loadable';
-import Loading from './routes/Loading/index';
+//全局loading
+import Loading from './component/Loading/index';
+//全局 svg
 import './assets/index';
+//登录页
 const Index = Loadable({
     loader: () => import(/* webpackChunkName: "Index" */ "./routes/Index/index"),
     loading: Loading
 });
+//manLayout
 const MainLayout = Loadable({
     loader: () => import(/* webpackChunkName: "MainLayout" */ "./MainLayout/index"),
     loading: Loading
 });
-
-
-// import Index from "./routes/Index/index";
-// import Home from "./routes/Home/index";
-// import User from "./routes/User/index";
-
+//manLayout
+const NotFound = Loadable({
+    loader: () => import(/* webpackChunkName: "NotFound" */ "./component/NotFound/index"),
+    loading: Loading
+});
 
 const Root = () => (
-  <BrowserRouter >
-    <div>
-        <Switch>
-            <Route path="/:abc" exact component={Index} />
-            <Route path="/fe" component={MainLayout} />
-        </Switch>
-        
-    </div>
+    <BrowserRouter >
+        <div>
+            <Switch>
+                {/* <Redirect to='/notFound' component={NotFound} /> */}
+
+                <Route path="/" exact component={Index} />
+                <Route path="/fe" component={MainLayout} />
+                <Route component={NotFound} />
+            </Switch>
+        </div>
     </BrowserRouter>
 )
 

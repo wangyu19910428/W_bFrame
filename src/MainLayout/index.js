@@ -1,8 +1,4 @@
-import { Layout, Menu, Icon } from 'antd';
-const { Header, Content, Footer, Sider } = Layout;
-import {withRouter} from 'react-router-dom';
-// import Loadable from 'react-loadable';
-import Loading from '../routes/Loading/index';
+import Loading from '../component/Loading/index';
 const Home = Loadable({
     loader: () => import(/* webpackChunkName: "Home" */ "../routes/Home/index"),
     loading: Loading
@@ -11,73 +7,138 @@ const User = Loadable({
     loader: () => import(/* webpackChunkName: "User" */ "../routes/User/index"),
     loading: Loading
 });
+const NotFound = Loadable({
+    loader: () => import(/* webpackChunkName: "NotFound" */ "../component/NotFound/index"),
+    loading: Loading
+});
 
 import './index.scss';
+
+
+import {Layout, Menu, Icon,} from 'antd';
+const {Header, Content, Footer, Sider,} = Layout;
+const SubMenu = Menu.SubMenu;
+
 
 class MainLayout extends Component{
     constructor(props) {
         super(props);
         
         this.state = {
-            
+            collapsed: true,
+            selectedKeys: [],
+            menuData: [
+                {
+                    name: '一级导航', 
+                    url: '',                // child为[], url有值，反之则为空
+                    icon: 'setting',           // url为空则，有值
+                    type: 1, //导航类型 1 一级导航 2 二级导航 3 三级导航
+                    chilren: [
+                        {
+                            name: '二级导航',
+                            url: '',
+                            icon: 'setting',
+                            type: 2,
+                            chilren: [
+                                {
+                                    name: '三级导航',
+                                    url: '/fe/home',
+                                    icon: '',
+                                    type: 3,
+                                    chilren: []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: '一级导航',
+                    url: '/fe/user',
+                    icon: 'setting',
+                    type: 1,
+                    chilren: []
+                },
+            ]
         }
     }
 
     componentDidMount = () => {
-        console.log(this.props)
+        this.setState({
+            selectedKeys: [this.props.location.pathname]
+        });
     }
     
-    
+    /**
+     * @description 打开关闭菜单栏
+     * @param {boolean} collapsed
+     */
+    onCollapse = (collapsed) => {
+        this.setState({ collapsed });
+    }
+
+    /**
+     * @description 遍历菜单递归
+     * @param {object} item {name: '名称', url: '路径', icon: 'icon', type: '类型', children: [下级导航数据]}
+     */
+    loop = (item) => {
+        if (item.chilren instanceof Array && item.chilren.length) {
+            return <SubMenu key={item.url} title={<span><Icon type={item.icon} /><span>{item.name}</span></span>}>
+            {
+                item.chilren.map(item_2 => {
+                    return this.loop(item_2);
+                })
+            }
+            </SubMenu>
+        } else {
+            return <Menu.Item key={item.url}  onClick={() => {this.props.history.push({pathname: item.url})}} >
+            {
+                (item.type === 1||  item.chilren.length)? <Icon type={item.icon} />: null
+            }
+                <span >{item.name}</span>
+            </Menu.Item>
+        };
+    }
+
+    /**
+     * @description 菜单选中事件
+     * @param {object} item
+     */
+    onMenuSelect = (item) => {
+        this.setState({
+            selectedKeys: item.selectedKeys
+        });
+    }
 
     render () {
-        const { match } = this.props
+        const { match } = this.props;
+        const { collapsed, menuData, selectedKeys } = this.state;
         return (
-            <Layout>
-                <Sider collapsible style={{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }}>
+            <Layout style={{ minHeight: '100vh' }}>
+                <Sider
+                    collapsible
+                    collapsed={collapsed}
+                    onCollapse={this.onCollapse}
+                >
                     <div className="logo" />
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                        <Menu.Item key="1">
-                            <Icon type="user" />
-                            <span className="nav-text">nav 1</span>
-                        </Menu.Item>
-                        <Menu.Item key="2">
-                            <Icon type="video-camera" />
-                            <span className="nav-text">nav 2</span>
-                        </Menu.Item>
-                        <Menu.Item key="3">
-                            <Icon type="upload" />
-                            <span className="nav-text">nav 3</span>
-                        </Menu.Item>
-                        <Menu.Item key="4">
-                            <Icon type="bar-chart" />
-                            <span className="nav-text">nav 4</span>
-                        </Menu.Item>
-                        <Menu.Item key="5">
-                            <Icon type="cloud-o" />
-                            <span className="nav-text">nav 5</span>
-                        </Menu.Item>
-                        <Menu.Item key="6">
-                            <Icon type="appstore-o" />
-                            <span className="nav-text">nav 6</span>
-                        </Menu.Item>
-                        <Menu.Item key="7">
-                            <Icon type="team" />
-                            <span className="nav-text">nav 7</span>
-                        </Menu.Item>
-                        <Menu.Item key="8">
-                            <Icon type="shop" />
-                            <span className="nav-text">nav 8</span>
-                        </Menu.Item>
+                    <Menu theme="dark" selectedKeys={selectedKeys} mode="inline" onSelect={this.onMenuSelect} >
+                    {
+                        menuData.map(item => {
+                            return this.loop(item);
+                        })
+                    }
                     </Menu>
                 </Sider>
-                <Layout style={{ marginLeft: 200 }}>
-                    <Header >header</Header>
-                    <Content>
-                        <Route path={`${match.path}/home`} component={Home}/>
-                        <Route path={`${match.path}/user`} component={User} />
+                <Layout>
+                    <Header style={{ background: '#fff', padding: 0 }} />
+                    <Content style={{ margin: '16px' }}>
+                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                            <Route path={`${match.path}/home`} component={Home}/>
+                            <Route path={`${match.path}/user`} component={User} />
+                            <Route component={NotFound} />
+                        </div>
                     </Content>
-                    <Footer>
-                        Ant Design ©2018 Created by Ant UED
+                    <Footer style={{ textAlign: 'center' }}>
+                        UXIN 后台管理系统 @2018
                     </Footer>
                 </Layout>
             </Layout>
@@ -86,4 +147,4 @@ class MainLayout extends Component{
     
 }
 
-export default withRouter(MainLayout);
+export default MainLayout;

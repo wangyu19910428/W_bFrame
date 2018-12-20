@@ -13,26 +13,18 @@ export default class Home extends Component{
     
 
     handleCLick = () => {
-        this.props.history.push({pathname: '/10', query: {id: 1}, search: '?id=1'});
+        this.props.history.push({pathname: '/', query: {id: 1}, search: '?id=1'});
         
     }
 
     render () {
         return (
             <div id='home'>
-            <svg>
-          
-            <use href="#global" fill="blue" width="40" height="40" />
-            </svg>Home
+                <svg width="40" height="40" >
+                    <use href="#global" fill="blue" />
+                </svg>
+                Home
                 <Button type='primary' onClick={this.handleCLick} >gaibna</Button>
-                <DatePicker/>
-                <Input/>
-                <Table/>
-                <Card></Card>
-                <Select>
-                    <Option value={1}>name</Option>
-                </Select>
-
             </div>
         )
     }

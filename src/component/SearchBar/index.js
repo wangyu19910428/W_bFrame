@@ -1,8 +1,10 @@
-import { Form, Row, Col, Button, Icon } from 'antd';
+import React from 'react';
+
+import { Form, Row, Col, Button } from 'antd';
 const FormItem = Form.Item;
 
 
-class SearchBarComponent extends Component {
+class SearchBarComponent extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
