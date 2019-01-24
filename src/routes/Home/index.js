@@ -1,6 +1,5 @@
 import './index.scss';
-import { Button, DatePicker, Input, Table, Card, Select } from 'antd';
-const Options = Select.Option;
+import { Button } from 'antd';
 
 export default class Home extends Component{
     constructor(props) {
