@@ -1,14 +1,13 @@
 import './index.scss';
-import { Button, DatePicker, Input, Table, Card, Select } from 'antd';
+import { Button } from 'antd';
 import Dialog from '../../component/Dialog/index';
-const Options = Select.Option;
 
 export default class Home extends Component{
     constructor(props) {
         super(props);
         this.state = {
             visible: false
-        };
+        }
     }
 
     componentWillMount = () => {
@@ -23,13 +22,6 @@ export default class Home extends Component{
         });
     }
 
-    dialogClick = () => {
-        this.setState({
-            visible: false
-        });
-        alert()
-    }
-
     render () {
         return (
             <div id='home'>
@@ -40,9 +32,9 @@ export default class Home extends Component{
                 <Button type='primary' onClick={this.handleCLick} >gaibna</Button>
                 {
                     this.state.visible? 
-                    <div style={{height: 300, background: 'red'}} onClick={this.dialogClick}>
-                        <Dialog  >
-                            <div >1234567890</div>
+                    <div onClick={() => {this.setState({visible: false})}} >
+                        <Dialog>
+                            1234567890
                         </Dialog>
                     </div>
                     : null
