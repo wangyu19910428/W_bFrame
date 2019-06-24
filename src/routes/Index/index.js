@@ -12,7 +12,7 @@ export default class Index extends Component{
         return (
             <div id='index' onClick={() => {
                 this.props.history.push({pathname: '/fe/home', search: '?id=2'})
-            }} >Index</div>
+            }} >Index 123</div>
         )
     }
 }
