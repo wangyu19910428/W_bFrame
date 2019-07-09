@@ -23,7 +23,7 @@ let options = {
     output: {
         filename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js',
         path: DIST_PATH,
-        publicPath: './',
+        publicPath: './dist',
         chunkFilename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js'
     },
     module: {
