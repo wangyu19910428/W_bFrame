@@ -4,7 +4,7 @@ const config = require('./webpack.base.js');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const PORT = 5200;
 const HOST = '127.0.0.1';
-
+//3
 // 本地环境静态资源路径
 const localPublicPath = 'http://' + HOST + ':' + PORT + '/';
 config.devtool = 'inline-source-map';
