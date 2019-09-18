@@ -19,6 +19,10 @@ config.plugins.push(
 new WebpackDevServer(webpack(config), {
   hot:true,
   inline: true,
+  headers:{
+    "Access-Control-Allow-Origin":"*"
+  },
+  open: true,
   compress: true,
   stats: {
     chunks: false,

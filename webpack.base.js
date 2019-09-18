@@ -20,6 +20,7 @@ let HtmlPluginOptions = {
 __DEV__? HtmlPluginOptions.alwaysWriteToDisk = true: null;
 
 let options = {
+    entry: ['babel-polyfill', SRC_PATH + '/index.js'],
     output: {
         filename: __DEV__? 'js/[name].js': 'js/[name]-[hash:8].js',
         path: DIST_PATH,

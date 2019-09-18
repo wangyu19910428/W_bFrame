@@ -1,16 +1,23 @@
-import Loading from '../component/Loading/index';
-const Home = Loadable({
-    loader: () => import(/* webpackChunkName: "Home" */ "../routes/Home/index"),
-    loading: Loading
-});
-const User = Loadable({
-    loader: () => import(/* webpackChunkName: "User" */ "../routes/User/index"),
-    loading: Loading
-});
-const NotFound = Loadable({
-    loader: () => import(/* webpackChunkName: "NotFound" */ "../component/NotFound/index"),
-    loading: Loading
-});
+// import Loading from '../component/Loading/index';
+// const Home = Loadable({
+//     loader: () => import(/* webpackChunkName: "Home" */ "../routes/Home/index"),
+//     loading: Loading
+// });
+// const User = Loadable({
+//     loader: () => import(/* webpackChunkName: "User" */ "../routes/User/index"),
+//     loading: Loading
+// });
+// const NotFound = Loadable({
+//     loader: () => import(/* webpackChunkName: "NotFound" */ "../component/NotFound/index"),
+//     loading: Loading
+// });
+import lazyLoad from '../utils/lazyLoad';
+// import Home from '../routes/Home/index';
+// import User from '../routes/User/index';
+// import NotFound from '../component/NotFound/index';
+const Home = lazyLoad(() => import(/* webpackChunkName: "Home" */'../routes/Home/index'));
+const User = lazyLoad(() => import(/* webpackChunkName: "User" */'../routes/User/index'));
+// const NotFound = lazyLoad(() => import(/* webpackChunkName: "NotFound" */'../component/NotFound/index'));
 
 import './index.scss';
 
@@ -134,7 +141,7 @@ class MainLayout extends Component{
                         <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                             <Route path={`${match.path}/home`} component={Home}/>
                             <Route path={`${match.path}/user`} component={User} />
-                            <Route component={NotFound} />
+                            {/* <Route component={NotFound} /> */}
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>
