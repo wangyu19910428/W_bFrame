@@ -3,7 +3,7 @@ const utils  = require('./utils');//公用方法
 const SRC_PATH = utils.fullPath('src');
 const DIST_PATH = utils.fullPath('dist');
 const NODE_MODULES = utils.fullPath('node_modules');
-//2
+
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 //插件
 const HtmlWebpackPlugin = require('html-webpack-plugin');
