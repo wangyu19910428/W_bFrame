@@ -4,6 +4,7 @@
   "description": "wy backstage frame",
   "private": true,
   "scripts": {
+    "start": "node app.js",
     "build": "webpack --config webpack.pro.js",
     "dev": "webpack --config webpack.dev.js"
   },
@@ -45,13 +46,16 @@
     "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
-    "webpack-parallel-uglify-plugin": "^1.1.0"
-  },
-  "dependencies": {
+    "webpack-parallel-uglify-plugin": "^1.1.0",
     "antd": "^3.10.8",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^4.3.1"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0"
   }
 }

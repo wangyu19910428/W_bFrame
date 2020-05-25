@@ -12,6 +12,10 @@ config.mode = 'development';
 
 config.output.publicPath = localPublicPath;
 
+config.plugins.push(
+    new HtmlWebpackHarddiskPlugin()
+)
+
 new WebpackDevServer(webpack(config), {
   hot:true,
   inline: true,
@@ -33,9 +37,6 @@ new WebpackDevServer(webpack(config), {
 // config.plugins.push(
     // new webpack.HotModuleReplacementPlugin()
 // )
-config.plugins.push(
-    new HtmlWebpackHarddiskPlugin()
-)
 
 
 
